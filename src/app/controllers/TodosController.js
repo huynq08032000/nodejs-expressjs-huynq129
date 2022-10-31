@@ -1,5 +1,5 @@
 const Todo = require("../models/Todo")
-
+const status = require("http-status")
 class TodosController {
     // [GET] /todos
     index(req, res, next) {
@@ -13,6 +13,7 @@ class TodosController {
         const todo = new Todo(req.body)
         todo.save()
             .then(() => res.json({
+               statusCode: status[200],
                 message: 'Add new todo success',
                 data: todo
             }))
@@ -24,6 +25,7 @@ class TodosController {
     getTodoById(req, res, next) {
         Todo.findById(req.params.id)
             .then(todo => res.json({
+                statusCode: status[200],
                 message: 'Get todo success',
                 todo: todo
             }))
@@ -36,7 +38,8 @@ class TodosController {
             .then(() => {
                 Todo.findById(req.params.id)
                     .then(todo => res.json({
-                        message: 'Get todo success',
+                        statusCode: status[200],
+                        message: 'Update todo success',
                         todo: todo
                     }))
                     .catch(next)
@@ -45,6 +48,17 @@ class TodosController {
     }
 
     // [DELETE] /todos/:id
+
+    deleteTodoById(req, res, next) {
+        Todo.deleteOne({ _id: req.params.id })
+            .then(() => {
+                res.json({
+                    statusCode: status[200],
+                    message: 'Delete todo success'
+                })
+            })
+            .catch(next)
+    }
 }
 
 module.exports = new TodosController;
