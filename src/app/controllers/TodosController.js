@@ -10,7 +10,7 @@ class TodosController {
 
     // [GET] /todos/:id
     getTodoById(req, res, next) {
-        Todo.findOne({ _id: req.params.id })
+        Todo.findById({ _id: req.params.id })
             .then(todo => res.json({
                 message: 'Get todo success',
                 todo: todo
@@ -21,10 +21,13 @@ class TodosController {
     // [POST] /todos
     createNewTodo(req, res, next) {
         const todo = new Todo(req.body)
-        res.json({
-            message: 'Add new todo success',
-            data: todo
-        })
+        todo.save()
+            .then(() => res.json({
+                message: 'Add new todo success',
+                data: todo
+            }))
+            .catch(next)
+
     }
 }
 
