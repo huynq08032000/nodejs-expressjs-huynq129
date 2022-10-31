@@ -10,7 +10,7 @@ class TodosController {
 
     // [GET] /todos/:id
     getTodoById(req, res, next) {
-        Todo.findById({ _id: req.params.id })
+        Todo.findById(req.params.id)
             .then(todo => res.json({
                 message: 'Get todo success',
                 todo: todo
