@@ -5,8 +5,8 @@ const Todo = new Schema({
     name: { type: String },
     description: { type: String },
     check: { type: Boolean, default: false },
-    createAt: { type: Date, default: Date.now },
-    updateAt: { type: Date, default: Date.now }
+}, {
+    timestamps : true,
 })
 
 module.exports = mongoose.model('todo_list', Todo)
