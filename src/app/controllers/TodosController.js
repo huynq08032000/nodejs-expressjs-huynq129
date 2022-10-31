@@ -20,7 +20,11 @@ class TodosController {
 
     // [POST] /todos
     createNewTodo(req, res, next) {
-
+        const todo = new Todo(req.body)
+        res.json({
+            message: 'Add new todo success',
+            data: todo
+        })
     }
 }
 
